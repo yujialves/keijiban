@@ -12,7 +12,7 @@ from controller.AuthenticationHandlers import SigninBaseHandler, SigninHandler, 
 from controller.ProfileHandlers import ProfileUpdateHandler, ProfileShowHandler
 from controller.ThreadsHandlers import ThreadsHandler, ThreadsCreateHandler
 from controller.ChatsHandlers import ChatsShowHandler, ChatsInsertHandler
-from controller.ProfileHandlers import ProfileShowHandler
+from controller.ProfileHandlers import ProfileShowHandler, ProfileUpdateHandler
 # from controller.ChatsHandler import ChatDeleteHandler, ChatUpdateHandler, ChatShowHandler, ChatsInsertHandler
 from controller.WebAPIHandlers import IncomeRankHandler, ExpensesRankHandler, MonthlyReportHandler
 
@@ -43,6 +43,7 @@ application = tornado.web.Application([
     (r"/chats/([0-9]+)", ChatsShowHandler),  # 月別日別レポート
     (r"/chats/([0-9]+)/insert", ChatsInsertHandler),  # 月別日別レポート
     (r"/profile", ProfileShowHandler),  # 月別日別レポート
+    (r"/profile/update", ProfileUpdateHandler),  # 月別日別レポート
 
 ],
     template_path=os.path.join(os.getcwd(),  "templates"),

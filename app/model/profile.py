@@ -12,6 +12,7 @@ class profile:
         self.attr = {}
         self.attr["id"] = None
         self.attr["user_id"] = None
+        self.attr["nick_name"] = None
         self.attr["introduction"] = None
 
     @staticmethod
@@ -30,7 +31,7 @@ class profile:
                 CREATE TABLE `table_profile` (
                 `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
                 `user_id` INT(11) NOT NULL,
-                `profile_name` VARCHAR(50),
+                `nick_name` VARCHAR(50),
                 `introduction` VARCHAR(500)
                 )""")
             con.commit()
@@ -45,8 +46,18 @@ class profile:
         return all([
           self.attr["id"] is None or type(self.attr["id"]) is int,
           self.attr["user_id"] is not None and type(self.attr["user_id"]) is int,
-          self.attr["introduction"] is not None and type(self.attr["introduction"]) is int and len(str(self.attr["introduction"])) > 0,
         ])
+
+    @staticmethod
+    def build():
+        pf = profile()
+        # defaultが設定されている変数はdefault値にしておくと良い
+        # 入力が必要な物はNoneのままにしておく
+        pf.attr["user_id"] = None
+        pf.attr["nick_name"] = None
+        pf.attr["introduction"] = None
+        return pf
+
 
     def save(self):
         if(self.is_valid):
@@ -61,12 +72,14 @@ class profile:
     def _db_save_insert(self):
         with DBConnector(dbName='db_%s' % project.name()) as con, con.cursor() as cursor:
             # データの保存(INSERT)
+            print(self.attr["nick_name"], self.attr["introduction"])
             cursor.execute("""
                 INSERT INTO table_profile
-                    (user_id, introduction)
+                    (user_id, nick_name, introduction)
                 VALUES
-                    (%s, %s); """,
+                    (%s, %s, %s);""",
                 (self.attr["user_id"],
+                self.attr["nick_name"],
                 self.attr["introduction"]))
             
             # INSERTされたAUTO INCREMENT値を取得
@@ -83,12 +96,12 @@ class profile:
             # データの保存(UPDATE)
             cursor.execute("""
                 UPDATE table_profile
-                SET user_id = %s,
+                SET nick_name = %s,
                     introduction = %s,
-                WHERE id = %s; """,
-                (self.attr["user_id"],
+                WHERE user_id = %s; """,
+                (self.attr["nick_name"],
                 self.attr["introduction"],
-                self.attr["id"]))
+                self.attr["user_id"]))
             con.commit()
         
         return self.attr["id"]
@@ -104,12 +117,11 @@ class profile:
             """, (user_id,))
             results = cursor.fetchall()
         
-        records = []
+        pf = profile()
         for data in results:
-            pf = profile()
             pf.attr["id"] = data["id"]
             pf.attr["user_id"] = data["user_id"]
+            pf.attr["nick_name"] = data["nick_name"]
             pf.attr["introduction"] = data["introduction"]
-            records.append(pf)
 
-        return records
+        return pf

@@ -16,17 +16,20 @@ class ProfileUpdateHandler(SigninBaseHandler):
         _signedInUser = user.find(int(_id))
 
         # profile.htmlへリダイレクト
-        _nick_name = self.get_argument("nick-name", None)
-        _introduction = self.get_argument("introduction", None)
-        introduction = []
-        nick_name = []
-        if _introduction is not None: introduction.append(_introduction)
-        if _nick_name is not None: nick_name.append(_nick_name)
+        nick_name = self.get_argument("nick-name", "")
+        introduction = self.get_argument("introduction", "")
 
-        self.render("cashbooks.html",
+        pf = profile.build()
+        pf.attr["user_id"] = int(_id)
+        print(pf.attr["user_id"])
+        pf.attr["nick_name"] = nick_name
+        pf.attr["introduction"] = introduction
+        pf.save()
+
+        self.render("profile.html",
             user=_signedInUser,
-            nick_name=nick_name,
-            introduction=introduction,
+            profile=pf,
+            mode="registered",
             errors=[])
 
 class ProfileShowHandler(SigninBaseHandler):
@@ -40,9 +43,14 @@ class ProfileShowHandler(SigninBaseHandler):
 
         # モデルから全てのユーザ情報を取得
         pf = profile.select_by_user_id(int(_id))
+        if pf.attr["nick_name"] is None:
+            pf.attr["nick_name"] = ""
+        if pf.attr["introduction"] is None:
+            pf.attr["introduction"] = ""
 
         # profile.htmlへリダイレクト
         self.render("profile.html",
             user=_signedInUser,
             profile=pf,
+            mode="",
             errors=[])

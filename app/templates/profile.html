@@ -2,31 +2,27 @@
 {% block title %}plofile{% end %}
 {% block content %}
 <div class="profile">
-  <h1>プロフィール</h1>
-  <script type="text/javascript" language="javascript">
-    function onButtonClick() {
-
-    }
-
-  </script>
-
-  <h1 class="text-center" style="color:gray">プロフィール</h1>
-
-  <p>
-    <input type="button" class="btn btn-danger btn-lg float-right my-2" value="  編集  " 　onclick="onButtonClick();">
-  </p>
-
-  <input type="text" placeholder="ニックネーム" class="form-group my-5" name="nick-name" id="nick-name" value="">
-
-  <textarea placeholder="自己紹介" class="form-control" name="introduction" id="introduction" rows="7"></textarea>
-
-  <div id="output"></div>
-
-  <p>
-    <input type="button" class="btn btn-light btn-lg" value="戻る" 　onclick="onButtonClick();">
-  </p>
-
-
-
+    <h1 class="text-center" style="color:gray">プロフィール</h1>
+    <form action="profile/update">
+        <div class="container">
+            <div class="row mt-4">
+                <input type="text" placeholder="ニックネーム" class="form-control form-control-lg" name="nick-name" id="nick-name" value="{{ profile.attr["nick_name"] }}">
+            </div>
+            <div class="row mt-4">
+                <textarea placeholder="自己紹介" class="form-control form-control-lg" name="introduction" id="introduction" rows="7">
+                    {{ profile.attr["introduction"] }}
+                </textarea>
+            </div>
+            {% if mode == "registered" %}
+            <div id="output">
+                登録が完了しました。
+            </div>
+            {% end %}
+            <div class="row mt-3">
+                <a class="btn btn-light btn-lg mr-2" href="/thread" role="button">戻る</a>
+                <button type="submit" class="btn btn-primary btn-lg">保存</button>
+            </div>
+        </div>
+    </form>
 </div>
 {%end%}
