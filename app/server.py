@@ -7,10 +7,12 @@ import sys
 from model.thread import thread
 from model.user import user
 from model.chats import chats
+from model.profile import profile
 from controller.AuthenticationHandlers import SigninBaseHandler, SigninHandler, SignupHandler, SignoutHandler
 from controller.ProfileHandlers import ProfileUpdateHandler, ProfileShowHandler
 from controller.ThreadsHandlers import ThreadsHandler, ThreadsCreateHandler
 from controller.ChatsHandlers import ChatsShowHandler, ChatsInsertHandler
+from controller.ProfileHandlers import ProfileShowHandler
 # from controller.ChatsHandler import ChatDeleteHandler, ChatUpdateHandler, ChatShowHandler, ChatsInsertHandler
 from controller.WebAPIHandlers import IncomeRankHandler, ExpensesRankHandler, MonthlyReportHandler
 
@@ -33,9 +35,6 @@ application = tornado.web.Application([
     (r"/signin", SigninHandler),
     (r"/signup", SignupHandler),
     (r"/signout", SignoutHandler),
-    # (r"/cashbooks", CashbooksHandler),   # プロフィール　表示
-    # (r"/cashbook/new", CashbookCreateHandler), # スレッド 新規作成
-    # (r"/cashbook/show/([0-9]+)", CashbookShowHandler), # 現金出納帳 詳細
     (r"/api/incomerank", IncomeRankHandler),    # 摘要別収入ランキング
     (r"/api/expensesrank", ExpensesRankHandler),  # 摘要別支出ランキング
     (r"/api/monthlyreport/([0-9]+)", MonthlyReportHandler),  # 月別日別レポート
@@ -43,6 +42,8 @@ application = tornado.web.Application([
     (r"/thread/new", ThreadsCreateHandler),  # 月別日別レポート
     (r"/chats/([0-9]+)", ChatsShowHandler),  # 月別日別レポート
     (r"/chats/([0-9]+)/insert", ChatsInsertHandler),  # 月別日別レポート
+    (r"/profile", ProfileShowHandler),  # 月別日別レポート
+
 ],
     template_path=os.path.join(os.getcwd(),  "templates"),
     static_path=os.path.join(os.getcwd(),  "static"),
@@ -57,10 +58,12 @@ if __name__ == "__main__":
             thread.migrate()
             user.migrate()
             chats.migrate()
+            profile.migrate()
         if args[1] == "db_cleaner":
             thread.db_cleaner()
             user.db_cleaner()
             chats.db_cleaner()
+            profile.db_cleaner()
         if args[1] == "help":
             print("usage: python server.py migrate # prepare DB")
             print("usage: python server.py db_cleaner # remove DB")

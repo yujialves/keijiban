@@ -31,9 +31,7 @@
                 けいじばん
             </a>
             <div class="navbar-text-content">
-                User: <span class="username">{{ user.attr["name"] }}</span>( <span
-                    class="email">{{ user.attr["email"] }}</span> )
-                <a class="btn btn-outline-light" href="/signout">signout</a>
+                <a class="btn btn-outline-light" href="/profile">{{ user.attr["name"] }}</a>
             </div>
         </nav>
         {% block content %}

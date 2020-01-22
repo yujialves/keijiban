@@ -30,7 +30,8 @@ class profile:
                 CREATE TABLE `table_profile` (
                 `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
                 `user_id` INT(11) NOT NULL,
-                `introduction` VARCAHR(500),
+                `profile_name` VARCHAR(50),
+                `introduction` VARCHAR(500)
                 )""")
             con.commit()
 

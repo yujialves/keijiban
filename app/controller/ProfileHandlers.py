@@ -42,7 +42,7 @@ class ProfileShowHandler(SigninBaseHandler):
         pf = profile.select_by_user_id(int(_id))
 
         # profile.htmlへリダイレクト
-        self.render("cashbooks.html",
+        self.render("profile.html",
             user=_signedInUser,
             profile=pf,
             errors=[])
