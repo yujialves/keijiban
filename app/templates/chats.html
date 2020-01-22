@@ -1,0 +1,53 @@
+{% extends "_signedin_base.html" %}
+{% block title %}Chats{% end %}
+{% block content %}
+<div class="chats container-fluid">
+    <div class="card">
+        <h5 class="card-header d-flex justify-content-between align-items-center">
+             チャット画面
+            <a class="btn btn-primary" href="/thread" role="button">戻る</a>
+        </h5>
+        <div class="card-body">
+            {% if len(messages) > 0 %}
+            <div class="alert alert-info" role="alert">
+                {% for message in messages %}
+                <p class="mb-0">{{ escape(message) }}</p>
+                {% end %}
+            </div>
+            {% end %}
+            {% if len(errors) > 0 %}
+            <div class="alert alert-danger" role="alert">
+                {% for err in errors %}
+                <p class="mb-0">{{ escape(err) }}</p>
+                {% end %}
+            </div>
+            {% end %}
+            <table class="table table-hover">
+                <thead>
+                    <tr><th>ユーザ</th><th>日付</th><th>内容</th></tr>
+                </thead>
+                <tbody>
+                    {% for chat in chats %}
+                    <tr>
+                        <td>{{ chat.attr["user_id"] }}</td>
+                        <td>{{ str(chat.attr["datetime"]) }}</td>
+                        <td>{{ chat.attr["content"] }}</td>
+                    </tr>
+                    {% end %}
+                </tbody>
+                <tfoot>
+                    <form action="{{ thread }}/insert">
+                        <tr>
+                            <td><input type="text" class="form-control form-control-lg" name="insert-text"></td>
+                            <td><input type="submit" class="btn btn-success btn-lg" name="submit_button" value="送信"></td>
+                        </tr>
+                    </form>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <script>
+
+    </script>
+</div>
+{% end %}

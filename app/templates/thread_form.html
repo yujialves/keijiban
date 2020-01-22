@@ -1,0 +1,42 @@
+{% extends "_signedin_base.html" %}
+{% block title %}Thread({{ mode }}){% end %}
+{% block content %}
+<div class="thread thread-form">
+    <main role="main" class="container">
+        {% if len(errors) > 0 %}
+        <div class="alert alert-danger" role="alert">
+            {% for err in errors %}
+            <p class="mb-0">{{ escape(err) }}</p>
+            {% end %}
+        </div>
+        {% end %}
+        {% if mode == "new" %}
+        <form method="POST">
+            <div class="card">
+                <h5 class="card-header d-flex justify-content-between align-items-center">
+                    スレッド - 新規登録
+                </h5>
+                <div class="card-body">
+                    <!-- <div class="form-row">
+                        <div class="form-group col-6 invisible">
+                            <label for="form-id">対象データID</label>
+                            <input type="number" class="form-control" name="form-id" id="form-id">
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="form-title">題名</label>
+                        <input type="text" placeholder="動物、ゲーム、スポーツなど" class="form-control form-control-lg"
+                            name="form-title" id="form-title"
+                            value="{{ thread.attr['title'] if thread.attr['title'] is not None else '' }}">
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="/thread" class="btn btn-light" tabindex="-1">一覧へ戻る</a>
+                    <button type="submit" class="btn btn-primary">新規登録</button>
+                </div>
+            </div>
+        </form>
+        {% end %}
+    </main>
+</div>
+{% end %}

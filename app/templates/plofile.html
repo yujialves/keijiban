@@ -1,0 +1,32 @@
+{% extends "signedin_base.html" %}
+{% block title %}plofile{% end %}
+{% block content %}
+<div class="profile">
+  <h1>プロフィール</h1>
+  <script type="text/javascript" language="javascript">
+    function onButtonClick() {
+
+    }
+
+  </script>
+
+  <h1 class="text-center" style="color:gray">プロフィール</h1>
+
+  <p>
+    <input type="button" class="btn btn-danger btn-lg float-right my-2" value="  編集  " 　onclick="onButtonClick();">
+  </p>
+
+  <input type="text" placeholder="ニックネーム" class="form-group my-5" name="nick-name" id="nick-name" value="">
+
+  <textarea placeholder="自己紹介" class="form-control" name="introduction" id="introduction" rows="7"></textarea>
+
+  <div id="output"></div>
+
+  <p>
+    <input type="button" class="btn btn-light btn-lg" value="戻る" 　onclick="onButtonClick();">
+  </p>
+
+
+
+</div>
+{%end%}

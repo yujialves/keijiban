@@ -1,0 +1,66 @@
+{% extends "_signedin_base.html" %}
+{% block title %}Threads{% end %}
+{% block content %}
+
+<div class="card-body">
+    {% if len(errors) > 0 %}
+    <div class="alert alert-danger" role="alert">
+        {% for err in errors %}
+        <p class="mb-0">{{ escape(err) }}</p>
+        {% end %}
+    </div>
+    {% end %}
+
+    <h1 style="color: gray;" class="text-center">スレッド一覧</h1>
+    <div class="float-right">
+        <a href="/thread/new" class="btn btn-primary">スレッド新規作成</a>
+    </div>
+    <div class="row">
+        <input type="text" placeholder=" スレッドのタイトル">
+        <input type="button" class="btn btn-success" value="検索">
+    </div>
+
+    <table class="table table-hover mt-5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>題名</th>
+                <th>管理者</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a_thread in thread %}
+            <tr data-href="/chats/{{ a_thread.attr["id"] }}">
+                <td>{{ a_thread.attr["id"] }}</td>
+                <td>{{ a_thread.attr["title"] }}</td>
+                <td>{{ a_thread.attr["user_id"] }}</td>
+            </tr>
+            {% end %}
+        </tbody>
+    </table>
+
+    {% if len(thread) == 0 %}
+    <div class="alert alert-info" role="alert">
+        データがありません。<a href="/thread/new">新規登録</a>してください。
+    </div>
+    {% end %}
+
+    <script>
+        // trクリック時の動作設定
+        document.querySelectorAll("tr[data-href]").forEach((elm, i) => {
+            elm.addEventListener("click", (e) => {
+                console.log(e);
+                // クリック可能な要素は、そのクリックイベントを優先する
+                if (e.target.tagName == "A" &&
+                    e.target.tagName == "INPUT" &&
+                    e.target.tagName != "BUTTON") {
+                    return;
+                }
+                // data-href属性に設定したリンクへロケーションを変える
+                window.location = elm.dataset.href;
+            });
+        });
+    </script>
+
+</div>
+{% end %}
