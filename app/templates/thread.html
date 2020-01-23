@@ -33,7 +33,11 @@
             <tr data-href="/chats/{{ a_thread.attr["id"] }}">
                 <td>{{ a_thread.attr["id"] }}</td>
                 <td>{{ a_thread.attr["title"] }}</td>
-                <td>{{ a_thread.attr["user_id"] }}</td>
+                {% if a_thread.attr["nick_name"] is None %}
+                    <td>匿名</td>
+                {% else %}
+                    <td>{{ a_thread.attr["nick_name"] }}</td>
+                {% end %}
             </tr>
             {% end %}
         </tbody>

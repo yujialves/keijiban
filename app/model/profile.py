@@ -65,7 +65,8 @@ class profile:
         return False
 
     def _db_save(self):
-        if self.attr["id"] == None:
+        print(self.select_by_user_id(self.attr["user_id"]).attr["user_id"])
+        if self.select_by_user_id(self.attr["user_id"]).attr["user_id"] == None:
             return self._db_save_insert()
         return self._db_save_update()
 
@@ -97,7 +98,7 @@ class profile:
             cursor.execute("""
                 UPDATE table_profile
                 SET nick_name = %s,
-                    introduction = %s,
+                    introduction = %s
                 WHERE user_id = %s; """,
                 (self.attr["nick_name"],
                 self.attr["introduction"],

@@ -3,6 +3,7 @@ import datetime
 from decimal import Decimal
 from model.user import user
 from model.thread import thread
+from model.profile import profile
 from controller.AuthenticationHandlers import SigninBaseHandler
 
 
@@ -13,7 +14,7 @@ class ThreadsHandler(SigninBaseHandler):
         _id = tornado.escape.xhtml_escape(self.current_user)
         _signedInUser = user.find(int(_id))
 
-        # タイトルの取得
+        # 新規スレッドのタイトルを取得
         p_title = self.get_argument("title", None)
         th = thread.build()
         th.attr["title"] = p_title
@@ -21,6 +22,7 @@ class ThreadsHandler(SigninBaseHandler):
         if p_title is None:
             # ユーザーごとの現金出納帳データを取得
             results = thread.select_titles()
+            print(results)
             self.render("thread.html",
                         thread=results,
                         user=_signedInUser,
@@ -28,7 +30,6 @@ class ThreadsHandler(SigninBaseHandler):
                         errors=[])
         else:
             # ユーザーごとの現金出納帳データを取得
-            results = thread.select_titles()
             self.render("thread_form.html",
                         thread=th,
                         user=_signedInUser,

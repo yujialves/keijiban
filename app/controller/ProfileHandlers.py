@@ -21,7 +21,6 @@ class ProfileUpdateHandler(SigninBaseHandler):
 
         pf = profile.build()
         pf.attr["user_id"] = int(_id)
-        print(pf.attr["user_id"])
         pf.attr["nick_name"] = nick_name
         pf.attr["introduction"] = introduction
         pf.save()

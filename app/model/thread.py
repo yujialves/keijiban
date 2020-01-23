@@ -151,7 +151,9 @@ class thread:
                 con.cursor(MySQLdb.cursors.DictCursor) as cursor:
             cursor.execute("""
                 SELECT *
-                FROM   table_thread;
+                FROM   table_thread
+                LEFT OUTER JOIN table_profile 
+                USING(user_id);
             """)
             results = cursor.fetchall()
 
@@ -162,6 +164,10 @@ class thread:
             th.attr["user_id"] = data["user_id"]
             th.attr["name"] = data["name"]
             th.attr["title"] = data["title"]
+            if data["nick_name"] is not None:
+                th.attr["nick_name"] = data["nick_name"]
+            else:
+                th.attr["nick_name"] = None
             records.append(th)
 
         return records
