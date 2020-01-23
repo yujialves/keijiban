@@ -9,7 +9,8 @@
                 <input type="text" placeholder="ニックネーム" class="form-control form-control-lg" name="nick-name" id="nick-name" value="{{ profile.attr["nick_name"] }}">
             </div>
             <div class="row mt-4">
-                <textarea placeholder="自己紹介" class="form-control form-control-lg" name="introduction" id="introduction" rows="7">
+                <label for="introduction" >自己紹介</label>
+                <textarea class="form-control form-control-lg" name="introduction" id="introduction" rows="7">
                     {{ profile.attr["introduction"] }}
                 </textarea>
             </div>
@@ -18,9 +19,12 @@
                 登録が完了しました。
             </div>
             {% end %}
-            <div class="row mt-3">
-                <a class="btn btn-light btn-lg mr-2" href="/thread" role="button">戻る</a>
-                <button type="submit" class="btn btn-primary btn-lg">保存</button>
+            <div class="container">
+                <div class="row mt-3">
+                    <a class="btn btn-light btn-lg mr-2" href="/thread" role="button">戻る</a>
+                    <button type="submit" class="btn btn-primary btn-lg mr-4">保存</button>
+                    <a class="btn btn-light btn-lg" href="/signout" role="button">SignOut</a>
+                </div>
             </div>
         </div>
     </form>
