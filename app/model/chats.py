@@ -156,7 +156,10 @@ class chats:
         with DBConnector(dbName='db_%s' % project.name()) as con, con.cursor(MySQLdb.cursors.DictCursor) as cursor:
             # 対応するidをリストで返す
             cursor.execute("""
-                SELECT * FROM table_chats WHERE thread_id = %s
+                SELECT * FROM table_chats 
+                LEFT OUTER JOIN table_profile
+                USING(user_id)
+                WHERE thread_id = %s
                 """, (thread_id,))
             results = cursor.fetchall()
         records = []
@@ -167,5 +170,9 @@ class chats:
             ch.attr["thread_id"] = data["thread_id"]
             ch.attr["datetime"] = data["datetime"]
             ch.attr["content"] = data["content"]
+            if data["nick_name"] is None:
+                ch.attr["nick_name"] = None
+            else:
+                ch.attr["nick_name"] = data["nick_name"]
             records.append(ch)
         return records

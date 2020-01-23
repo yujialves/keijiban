@@ -29,7 +29,11 @@
                 <tbody>
                     {% for chat in chats %}
                     <tr>
-                        <td>{{ chat.attr["user_id"] }}</td>
+                        {% if chat.attr["nick_name"] is None %}
+                        <td>匿名</td>
+                        {% else %}
+                        <td>{{ chat.attr["nick_name"] }}</td>
+                        {% end %}
                         <td>{{ str(chat.attr["datetime"]) }}</td>
                         <td>{{ chat.attr["content"] }}</td>
                     </tr>
