@@ -25,13 +25,13 @@
 
     <body>
         <nav class="navbar navbar-dark bg-dark mb-4">
-            <a class="navbar-brand">
+            <a class="navbar-brand" href="/thread">
                 <!-- <img src="{{ static_url("img/top-icon.svg") }}" width="30" height="30" class="d-inline-block align-top"
                     alt="logo"> -->
                 けいじばん
             </a>
             <div class="navbar-text-content">
-                <a class="btn btn-outline-light" href="/profile">{{ user.attr["name"] }}</a>
+                <a class="btn btn-outline-light" href="/profile">プロフィール</a>
             </div>
         </nav>
         {% block content %}

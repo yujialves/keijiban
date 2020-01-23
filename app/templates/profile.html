@@ -5,7 +5,7 @@
     <h1 class="text-center" style="color:gray">プロフィール</h1>
     <form action="profile/update">
         <div class="container">
-            {% if mode == "" %}
+            {% if mode == "" or mode == "registered" %}
             <div class="row mt-4">
                 <input type="text" placeholder="ニックネーム" class="form-control form-control-lg" name="nick-name" id="nick-name" value="{{ profile.attr["nick_name"] }}">
             </div>
@@ -15,11 +15,11 @@
                     {{ profile.attr["introduction"] }}
                 </textarea>
             </div>
-            {% if mode == "registered" %}
-            <div id="output">
-                登録が完了しました。
-            </div>
-            {% end %}
+                {% if mode == "registered" %}
+                <div id="output">
+                    登録が完了しました。
+                </div>
+                {% end %}
             <div class="container">
                 <div class="row mt-3">
                     <a class="btn btn-light btn-lg mr-2" href="/thread" role="button">戻る</a>
