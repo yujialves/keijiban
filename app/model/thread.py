@@ -172,6 +172,34 @@ class thread:
 
         return records
 
+    @staticmethod
+    def select_from_titles(title):
+        with DBConnector(dbName='db_%s' % project.name()) as con, \
+                con.cursor(MySQLdb.cursors.DictCursor) as cursor:
+            cursor.execute("""
+                SELECT *
+                FROM   table_thread
+                LEFT OUTER JOIN table_profile 
+                USING(user_id)
+                WHERE title LIKE '%s';
+            """ % ("%%%s%%" % title))
+            results = cursor.fetchall()
+
+        records = []
+        for data in results:
+            th = thread()
+            th.attr["id"] = data["id"]
+            th.attr["user_id"] = data["user_id"]
+            th.attr["name"] = data["name"]
+            th.attr["title"] = data["title"]
+            if data["nick_name"] is not None:
+                th.attr["nick_name"] = data["nick_name"]
+            else:
+                th.attr["nick_name"] = None
+            records.append(th)
+
+        return records
+
     def delete(self):
         if self.attr["id"] == None:
             return None

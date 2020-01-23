@@ -16,8 +16,14 @@
         <a href="/thread/new" class="btn btn-primary">スレッド新規作成</a>
     </div>
     <div class="row mt-3">
-        <input type="text" placeholder=" スレッドのタイトル">
-        <input type="button" class="btn btn-success" value="検索">
+        <form>
+            <table>
+                <tr>
+                    <td><input type="text"  name="thread-name" placeholder="スレッドのタイトル" class="form-control"></td>
+                    <td><input type="submit" class="btn btn-success" value="検索"></td>
+                </tr>
+            </table>
+        </form>
     </div>
 
     <table class="table table-hover mt-5">

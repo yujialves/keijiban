@@ -19,15 +19,25 @@ class ThreadsHandler(SigninBaseHandler):
         th = thread.build()
         th.attr["title"] = p_title
 
+        # スレッドを検索する部分文字列を取得
+        thread_name = self.get_argument("thread-name", None)
+
         if p_title is None:
             # ユーザーごとの現金出納帳データを取得
-            results = thread.select_titles()
-            print(results)
-            self.render("thread.html",
-                        thread=results,
-                        user=_signedInUser,
-                        mode="new",
-                        errors=[])
+            if thread_name is None:
+                results = thread.select_titles()
+                self.render("thread.html",
+                            thread=results,
+                            user=_signedInUser,
+                            mode="new",
+                            errors=[])
+            else:
+                results = thread.select_from_titles(thread_name)
+                self.render("thread.html",
+                            thread=results,
+                            user=_signedInUser,
+                            mode="new",
+                            errors=[])
         else:
             # ユーザーごとの現金出納帳データを取得
             self.render("thread_form.html",
